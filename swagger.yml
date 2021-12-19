@@ -1,0 +1,150 @@
+swagger: "2.0"
+info:
+  description: Este es el archivo swagger file que define la api 
+  version: "1.0.0"
+  title: Api Usuarios
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /usuarios:
+    get:
+      operationId: usuarios.read_all
+      tags:
+        - Usuarios
+      summary: Carga la lista de usuarios
+      description: Carga la lista de usuarios
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Numero de usuarios a mostrar
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset de lista de usuarios
+          required: false
+      responses:
+        200:
+          description: se cargo los usuarios correctamente
+          schema:
+            type: array
+            items:
+              properties:
+                id:
+                  type: string
+                nombre:
+                  type: string
+                apellido:
+                  type: string
+                email: 
+                  type: string
+                fecha:
+                  type: string
+
+    post:
+      operationId: usuarios.create
+      tags:
+        - Usuarios
+      summary: Crea un usuario y lo agrega a la lista de usuarios
+      description: Crea un usuario en lista de usuarios
+      parameters:
+        - name: usuario
+          in: body
+          description: usuario a crear
+          required: True
+          schema:
+            type: object
+            properties:
+              nombre:
+                type: string
+                description: Nombre del usuario
+              apellido:
+                type: string
+                description: Apellido del usuario
+              email:
+                type: string
+                description: Email
+              fecha:
+                type: string
+                description: Fecha de nacimiento
+      responses:
+        201:
+          description: Successfully usuario creado
+
+  /usuarios/{id}:
+    get:
+      operationId: usuarios.read_one
+      tags:
+        - Usuarios
+      summary: Busca un usuario
+      description: Busca un usuario en la lista
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario que esta buscando
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully se encontro el usuario en la lista
+          schema:
+            properties:
+              id:
+                type: string
+              nombre:
+                type: string
+              apellido:
+                type: string
+              email:
+                type: string  
+              fecha:
+                type: string
+
+    put:
+      operationId: usuarios.update
+      tags:
+        - Usuarios
+      summary: Actualiza el usuario 
+      description: Actualiza el usuario en la lista de usuarios
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario que se actualiza
+          type: string
+          required: True
+        - name: usuario
+          in: body
+          schema:
+            type: object
+            properties:
+              nombre:
+                type: string
+              apellido:
+                type: string
+              email:
+                type: string
+              fecha:
+                type: string
+      responses:
+        200:
+          description: Successfully usuario actualizado
+    delete:
+      operationId: usuarios.delete
+      tags:
+        - Usuarios
+      summary: Borra un usuario
+      description: Borra un usuario de la lista de usuarios
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully usuario borrado de la lista
